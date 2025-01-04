@@ -1,13 +1,11 @@
-version: '3.8'
-
 networks:
   simon_network:
     driver: bridge
 
 services:
-  web:
+  nginx:
     image: nginx:latest
-    container_name: simon_web
+    container_name: simon_nginx
     ports:
       - "80:80"
     volumes:
@@ -34,11 +32,11 @@ services:
       - REDIS_PORT=${REDIS_PORT}
     depends_on:
       - redis
-      - db
+      - mysql
     networks:
       - simon_network
 
-  db:
+  mysql:
     build:
       context: ./mysql
       args:
@@ -79,6 +77,6 @@ services:
     ports:
       - "8080:80"
     depends_on:
-      - db
+      - mysql
     networks:
       - simon_network

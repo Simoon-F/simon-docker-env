@@ -4,12 +4,14 @@ ARG PHP_VERSION
 # 使用官方 PHP-FPM 镜像作为基础镜像
 FROM php:${PHP_VERSION}-fpm
 
+ARG USE_CHINA_MIRROR=false
 # 根据 USE_CHINA_MIRROR 配置选择镜像源
-ARG USE_CHINA_MIRROR
-RUN if [ "$USE_CHINA_MIRROR" = "true" ]; then \
-        sed -i 's/deb.debian.org/mirrors.ustc.edu.cn/g' /etc/apt/sources.list && \
-        sed -i 's/security.debian.org/mirrors.ustc.edu.cn/g' /etc/apt/sources.list; \
-    fi
+RUN if [ "${USE_CHINA_MIRROR:-false}" = "true" ]; then \
+      sed -i 's#deb.debian.org#mirrors.tuna.tsinghua.edu.cn#g' /etc/apt/sources.list.d/debian.sources && \
+      sed -i 's#security.debian.org#mirrors.tuna.tsinghua.edu.cn#g' /etc/apt/sources.list.d/debian.sources && \
+      echo "Updated sources.list:" && cat /etc/apt/sources.list.d/debian.sources; \
+  fi
+
 
 # 安装系统依赖
 RUN apt-get update && apt-get install -y \
