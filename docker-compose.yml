@@ -82,3 +82,18 @@ services:
       - mysql
     networks:
       - simon_network
+
+  workspace:
+    image: php:${PHP_VERSION}-cli
+    container_name: simon_workspace
+    volumes:
+      - ${APP_CODE_PATH_HOST}:/var/www/html
+    working_dir: /var/www/html
+    networks:
+      - simon_network
+    tty: true
+    stdin_open: true
+    depends_on:
+      - php
+      - mysql
+      - redis
