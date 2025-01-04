@@ -5,6 +5,7 @@ networks:
 services:
   nginx:
     image: nginx:latest
+    user: root 
     container_name: simon_nginx
     ports:
       - "80:80"
@@ -23,6 +24,7 @@ services:
       args:
         PHP_VERSION: ${PHP_VERSION}
         USE_CHINA_MIRROR: ${USE_CHINA_MIRROR}
+    user: root 
     container_name: simon_php
     volumes:
       - ${APP_CODE_PATH_HOST}:/var/www/html
@@ -41,6 +43,7 @@ services:
       context: ./mysql
       args:
         MYSQL_VERSION: ${MYSQL_VERSION}
+    user: root 
     container_name: simon_db
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
@@ -58,6 +61,7 @@ services:
     build:
       context: ./redis
     container_name: simon_redis
+    user: root 
     ports:
       - "6379:6379"
     volumes:
@@ -72,6 +76,7 @@ services:
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
+    user: root 
     container_name: simon_phpmyadmin
     environment:
       PMA_HOST: ${PMA_HOST}
@@ -88,6 +93,7 @@ services:
       context: ./workspace
       args:
         PHP_VERSION: ${PHP_VERSION}
+    user: root 
     container_name: simon_workspace
     volumes:
       - ${APP_CODE_PATH_HOST}:/var/www/html
