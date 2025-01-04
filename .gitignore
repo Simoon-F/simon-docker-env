@@ -1,0 +1,9 @@
+# Ignore MySQL data
+mysql-data/
+
+# Ignore IDE files
+.idea/
+.vscode/
+
+# Ignore local overrides
+.env
