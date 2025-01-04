@@ -1,37 +1,35 @@
-# 使用 ARG 定义变量
 ARG PHP_VERSION
 
-# 使用官方 PHP-FPM 镜像作为基础镜像
 FROM php:${PHP_VERSION}-fpm
 
-ARG USE_CHINA_MIRROR=false
-# 根据 USE_CHINA_MIRROR 配置选择镜像源
-RUN if [ "${USE_CHINA_MIRROR:-false}" = "true" ]; then \
-      sed -i 's#deb.debian.org#mirrors.tuna.tsinghua.edu.cn#g' /etc/apt/sources.list.d/debian.sources && \
-      sed -i 's#security.debian.org#mirrors.tuna.tsinghua.edu.cn#g' /etc/apt/sources.list.d/debian.sources && \
-      echo "Updated sources.list:" && cat /etc/apt/sources.list.d/debian.sources; \
-  fi
+ARG USE_CHINA_MIRROR
+RUN if [ "$USE_CHINA_MIRROR" = "true" ]; then \
+        sed -i 's|http://deb.debian.org|https://mirrors.ustc.edu.cn|g' /etc/apt/sources.list && \
+        sed -i 's|http://security.debian.org|https://mirrors.ustc.edu.cn|g' /etc/apt/sources.list; \
+    fi
 
-
-# 安装系统依赖
 RUN apt-get update && apt-get install -y \
-        unzip \
-        git
+    libzip-dev \
+    libonig-dev \
+    libxml2-dev \
+    libssl-dev \
+    libcurl4-openssl-dev \
+    libicu-dev \
+    libpq-dev \
+    libfreetype6-dev \
+    libjpeg62-turbo-dev \
+    libwebp-dev \
+    libxpm-dev
 
-# 安装 Laravel 必需的扩展
-RUN docker-php-ext-install \
-        bcmath \
-        ctype \
-        fileinfo \
-        json \
-        mbstring \
-        openssl \
-        pdo \
-        tokenizer \
-        xml \
-        pdo_mysql \
-        mysqli \
-        zip
+# 分步安装 PHP 扩展
+RUN docker-php-ext-install -j$(nproc) bcmath
+RUN docker-php-ext-install -j$(nproc) ctype
+RUN docker-php-ext-install -j$(nproc) fileinfo
+RUN docker-php-ext-install -j$(nproc) mbstring
+RUN docker-php-ext-install -j$(nproc) pdo
+RUN docker-php-ext-install -j$(nproc) xml
+RUN docker-php-ext-install -j$(nproc) pdo_mysql mysqli zip
+RUN docker-php-ext-install -j$(nproc) intl opcache
 
 # 安装 Redis 扩展
 RUN pecl install redis && docker-php-ext-enable redis
