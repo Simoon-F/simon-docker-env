@@ -8,10 +8,10 @@ FROM mysql:${MYSQL_VERSION}
 ENV TZ=Asia/Shanghai
 
 # 复制自定义配置文件（可选）
-COPY my.cnf /etc/mysql/conf.d/my.cnf
+COPY my.conf /etc/mysql/conf.d/my.conf
 
 # 设置配置文件权限
-RUN chmod 0444 /etc/mysql/conf.d/my.cnf
+RUN chmod 0444 /etc/mysql/conf.d/my.conf
 
 # 针对 MySQL 8.0 的特殊配置
 RUN if [ ${MYSQL_VERSION} = '8.0' ]; then \
