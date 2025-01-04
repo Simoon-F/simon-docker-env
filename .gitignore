@@ -7,3 +7,5 @@ mysql-data/
 
 # Ignore local overrides
 .env
+redis/data/
+redis/logs/
