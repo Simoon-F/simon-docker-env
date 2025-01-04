@@ -136,7 +136,7 @@ Use the provided scripts to switch versions:
 - **View Logs**:
   ```bash
   docker logs -f simon_php        # PHP logs
-  docker logs -f simon_web        # Nginx logs
+  docker logs -f simon_nginx        # Nginx logs
   docker logs -f simon_db         # MySQL logs
   docker logs -f simon_redis      # Redis logs
   ```
@@ -157,7 +157,7 @@ Use the provided scripts to switch versions:
 2. Place your project files in the directory specified by `APP_CODE_PATH_HOST` in `.env`.
 3. Restart the Nginx container:
    ```bash
-   docker-compose restart web
+   docker-compose restart nginx
    ```
 
 ### Use Chinese Mirrors

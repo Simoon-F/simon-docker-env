@@ -135,7 +135,7 @@ simon-docker-env/
 - **查看日志**:
   ```bash
   docker logs -f simon_php        # 查看 PHP 日志
-  docker logs -f simon_web        # 查看 Nginx 日志
+  docker logs -f simon_nginx        # 查看 Nginx 日志
   docker logs -f simon_db         # 查看 MySQL 日志
   docker logs -f simon_redis      # 查看 Redis 日志
   ```
@@ -156,7 +156,7 @@ simon-docker-env/
 2. 将你的项目文件放置在 `.env` 中 `APP_CODE_PATH_HOST` 指定的目录中。
 3. 重启 Nginx 容器：
    ```bash
-   docker-compose restart web
+   docker-compose restart nginx
    ```
 
 ### 使用中国镜像
