@@ -66,7 +66,7 @@ USE_CHINA_MIRROR=false
 运行以下命令启动所有服务：
 
 ```bash
-docker-compose up -d
+docker compose up -d
 ```
 
 这将启动：
@@ -82,7 +82,7 @@ docker-compose up -d
 
 ```plaintext
 simon-docker-env/
-├── docker-compose.yml
+├── docker compose.yml
 ├── nginx/
 │   ├── conf.d/
 │   │   ├── project1.conf
@@ -126,11 +126,11 @@ simon-docker-env/
 
 - **启动容器**:
   ```bash
-  docker-compose up -d
+  docker compose up -d
   ```
 - **停止容器**:
   ```bash
-  docker-compose down
+  docker compose down
   ```
 - **查看日志**:
   ```bash
@@ -156,7 +156,7 @@ simon-docker-env/
 2. 将你的项目文件放置在 `.env` 中 `APP_CODE_PATH_HOST` 指定的目录中。
 3. 重启 Nginx 容器：
    ```bash
-   docker-compose restart nginx
+   docker compose restart nginx
    ```
 
 ### 使用中国镜像

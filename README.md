@@ -67,7 +67,7 @@ USE_CHINA_MIRROR=false
 Run the following command to start all services:
 
 ```bash
-docker-compose up -d
+docker compose up -d
 ```
 
 This will start:
@@ -83,7 +83,7 @@ This will start:
 
 ```plaintext
 simon-docker-env/
-├── docker-compose.yml
+├── docker compose.yml
 ├── nginx/
 │   ├── conf.d/
 │   │   ├── project1.conf
@@ -127,11 +127,11 @@ Use the provided scripts to switch versions:
 
 - **Start Containers**:
   ```bash
-  docker-compose up -d
+  docker compose up -d
   ```
 - **Stop Containers**:
   ```bash
-  docker-compose down
+  docker compose down
   ```
 - **View Logs**:
   ```bash
@@ -157,7 +157,7 @@ Use the provided scripts to switch versions:
 2. Place your project files in the directory specified by `APP_CODE_PATH_HOST` in `.env`.
 3. Restart the Nginx container:
    ```bash
-   docker-compose restart nginx
+   docker compose restart nginx
    ```
 
 ### Use Chinese Mirrors
