@@ -22,5 +22,4 @@ fi
 
 # 重启容器
 docker compose down
-docker compose build workspace php
 docker compose up -d

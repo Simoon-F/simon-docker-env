@@ -4,9 +4,12 @@ FROM php:${PHP_VERSION}-fpm
 
 ARG USE_CHINA_MIRROR
 RUN if [ "$USE_CHINA_MIRROR" = "true" ]; then \
-        sed -i 's|http://deb.debian.org|https://mirrors.ustc.edu.cn|g' /etc/apt/sources.list.d/debian.sources && \
-        sed -i 's|http://security.debian.org|https://mirrors.ustc.edu.cn|g' /etc/apt/sources.list.d/debian.sources; \
+        sed -i 's|http://deb.debian.org|https://mirrors.aliyun.com|g' /etc/apt/sources.list && \
+        sed -i 's|http://security.debian.org|https://mirrors.aliyun.com|g' /etc/apt/sources.list && \
+        sed -i 's|http://deb.debian.org|https://mirrors.ustc.edu.cn|g' /etc/apt/sources.list && \
+        sed -i 's|http://security.debian.org|https://mirrors.ustc.edu.cn|g' /etc/apt/sources.list; \
     fi
+
 
 RUN apt-get update && apt-get install -y \
     libzip-dev \
@@ -21,12 +24,26 @@ RUN apt-get update && apt-get install -y \
     libwebp-dev \
     libxpm-dev
 
-RUN docker-php-ext-install -j$(nproc) pdo pdo_mysql opcache
+RUN apt-get update && apt-get install -y \
+    curl \
+    git \
+    vim \
+    unzip
 
+RUN docker-php-ext-install -j$(nproc) bcmath ctype fileinfo mbstring pdo xml pdo_mysql mysqli zip intl opcache
 
-RUN apt-get clean \
+RUN pecl install redis && docker-php-ext-enable redis
+
+# 安装 Composer 并根据 USE_CHINA_MIRROR 配置选择镜像源
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
+    && if [ "$USE_CHINA_MIRROR" = "true" ]; then \
+        composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/; \
+    fi
+
+RUN apt-get clean \ 
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /var/www/html
 
 RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo "Asia/Shanghai" > /etc/timezone
+

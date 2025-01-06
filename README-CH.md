@@ -1,7 +1,7 @@
 
 # Simon Docker 环境
 
-一个灵活且可定制的 Docker 开发环境，专为 Laravel（PHP）开发优化，同时支持扩展其他技术栈（如 Node.js、Python、Java）。
+一个灵活且可定制的 Docker 开发环境。
 
 ---
 

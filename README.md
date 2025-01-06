@@ -1,7 +1,7 @@
 
 # Simon Docker Environment
 
-A flexible and customizable Docker-based development environment, optimized for Laravel (PHP) development but extendable to other stacks like Node.js, Python, or Java.
+A flexible and customizable Docker-based development environment.
 
 ---
 
