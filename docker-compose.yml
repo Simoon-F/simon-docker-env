@@ -74,16 +74,16 @@ services:
     networks:
       - simon_network
 
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    user: root 
-    container_name: simon_phpmyadmin
-    environment:
-      PMA_HOST: ${PMA_HOST}
-      PMA_PORT: ${PMA_PORT}
-    ports:
-      - "8080:80"
-    depends_on:
-      - mysql
-    networks:
-      - simon_network
+  # phpmyadmin:
+  #   image: phpmyadmin/phpmyadmin
+  #   user: root 
+  #   container_name: simon_phpmyadmin
+  #   environment:
+  #     PMA_HOST: ${PMA_HOST}
+  #     PMA_PORT: ${PMA_PORT}
+  #   ports:
+  #     - "8080:80"
+  #   depends_on:
+  #     - mysql
+  #   networks:
+  #     - simon_network
