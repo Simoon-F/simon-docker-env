@@ -1,6 +1,10 @@
 # Ignore MySQL data
 mysql-data/
 
+redis/logs/
+redis-server.log
+redis/data/
+
 # Ignore IDE files
 .idea/
 .vscode/
@@ -8,7 +12,8 @@ mysql-data/
 # Ignore local overrides
 .env
 
-redis/data/
 *.log
-redis-server.log
+
 nginx/conf.d/*
+
+
