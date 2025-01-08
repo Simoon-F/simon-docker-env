@@ -10,3 +10,5 @@ mysql-data/
 
 redis/data/
 *.log
+redis-server.log
+nginx/conf.d/*
