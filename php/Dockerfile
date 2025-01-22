@@ -30,7 +30,7 @@ RUN apt-get update && apt-get install -y \
     vim \
     unzip
 
-RUN docker-php-ext-install -j$(nproc) bcmath ctype fileinfo mbstring pdo xml pdo_mysql mysqli zip intl opcache
+RUN docker-php-ext-install -j$(nproc) bcmath ctype fileinfo mbstring pdo xml pdo_mysql mysqli zip intl opcache gd
 
 RUN pecl install redis && docker-php-ext-enable redis
 
