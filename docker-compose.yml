@@ -24,6 +24,7 @@ services:
       args:
         PHP_VERSION: ${PHP_VERSION}
         USE_CHINA_MIRROR: ${USE_CHINA_MIRROR}
+        USE_FFMPEG: ${USE_FFMPEG}
     user: root 
     container_name: simon_php
     volumes:

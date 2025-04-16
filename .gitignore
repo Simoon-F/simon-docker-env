@@ -16,4 +16,4 @@ redis/data/
 
 nginx/conf.d/*
 
-
+.history
