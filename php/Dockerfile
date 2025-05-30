@@ -46,6 +46,7 @@ RUN if [ "$USE_FFMPEG" = "true" ]; then \
             automake \
             pkg-config \
             libx264-dev \
+            libmp3lame-dev \
             libx265-dev && \
         echo "[STEP] Installing opencore-amr..." && \
         cd /tmp && \
@@ -69,6 +70,7 @@ RUN if [ "$USE_FFMPEG" = "true" ]; then \
             --enable-libopencore-amrnb \
             --enable-libopencore-amrwb \
             --enable-version3 \
+            --enable-libmp3lame \
             --disable-static && \
         make -j$(nproc) && \
         make install && \
