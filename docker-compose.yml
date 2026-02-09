@@ -29,6 +29,7 @@ services:
     container_name: simon_php
     volumes:
       - ${APP_CODE_PATH_HOST}:/var/www/html
+      - ./php/custom.ini:/usr/local/etc/php/conf.d/custom.ini
     environment:
       - PHP_VERSION=${PHP_VERSION}
       - REDIS_HOST=${REDIS_HOST}
