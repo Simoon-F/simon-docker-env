@@ -13,6 +13,13 @@ RUN if [ "$USE_CHINA_MIRROR" = "true" ]; then \
         echo "[INFO] China mirrors configured successfully"; \
     else \
         echo "[INFO] Using default apt sources"; \
+        if grep -qE "buster|stretch" /etc/os-release; then \
+            echo "[INFO] Detected old Debian version, switching to archive.debian.org"; \
+            CODENAME=$(grep VERSION_CODENAME /etc/os-release | cut -d= -f2); \
+            echo "deb http://archive.debian.org/debian/ $CODENAME main contrib non-free" > /etc/apt/sources.list; \
+            echo "deb http://archive.debian.org/debian-security $CODENAME/updates main contrib non-free" >> /etc/apt/sources.list; \
+            echo 'Acquire::Check-Valid-Until "false";' > /etc/apt/apt.conf.d/99no-check-valid-until; \
+        fi \
     fi
 
 # ============= 基础依赖安装 =============
@@ -28,7 +35,8 @@ RUN echo "[INFO] Installing base dependencies..." && \
         libfreetype6-dev \
         libjpeg62-turbo-dev \
         libwebp-dev \
-        libxpm-dev && \
+        libxpm-dev \
+        libmagickwand-dev && \
     echo "[INFO] Base dependencies installed"
 
 # ============= FFmpeg 安装 =============
@@ -110,9 +118,22 @@ RUN echo "[INFO] Installing PHP extensions..." && \
 
 # ============= Redis 扩展 =============
 RUN echo "[INFO] Installing Redis extension..." && \
-    pecl install redis && \
+    pecl channel-update pecl.php.net && \
+    if [ "$(php -r 'echo PHP_MAJOR_VERSION;')" = "5" ]; then \
+        pecl install redis-4.3.0; \
+    elif [ "$(php -r 'echo PHP_MAJOR_VERSION;')" = "7" ]; then \
+        pecl install redis-5.3.7; \
+    else \
+        pecl install redis; \
+    fi && \
     docker-php-ext-enable redis && \
     echo "[INFO] Redis extension installed"
+
+# ============= Imagick 扩展 =============
+RUN echo "[INFO] Installing Imagick extension..." && \
+    pecl install imagick && \
+    docker-php-ext-enable imagick && \
+    echo "[INFO] Imagick extension installed"
 
 # ============= Composer 安装 =============
 RUN echo "[INFO] Installing Composer..." && \
