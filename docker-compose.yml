@@ -5,7 +5,7 @@ networks:
 services:
   nginx:
     image: nginx:latest
-    user: root 
+    user: root
     container_name: simon_nginx
     ports:
       - "80:80"
@@ -13,30 +13,6 @@ services:
       - ./nginx/conf.d:/etc/nginx/conf.d
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
       - ${APP_CODE_PATH_HOST}:/var/www/html
-    depends_on:
-      - php
-    networks:
-      - simon_network
-
-  php:
-    build:
-      context: ./php
-      args:
-        PHP_VERSION: ${PHP_VERSION}
-        USE_CHINA_MIRROR: ${USE_CHINA_MIRROR}
-        USE_FFMPEG: ${USE_FFMPEG}
-    user: root 
-    container_name: simon_php
-    volumes:
-      - ${APP_CODE_PATH_HOST}:/var/www/html
-      - ./php/custom.ini:/usr/local/etc/php/conf.d/custom.ini
-    environment:
-      - PHP_VERSION=${PHP_VERSION}
-      - REDIS_HOST=${REDIS_HOST}
-      - REDIS_PORT=${REDIS_PORT}
-    depends_on:
-      - redis
-      - mysql
     networks:
       - simon_network
 
@@ -45,7 +21,7 @@ services:
       context: ./mysql
       args:
         MYSQL_VERSION: ${MYSQL_VERSION}
-    user: root 
+    user: root
     container_name: simon_db
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
@@ -63,7 +39,7 @@ services:
     build:
       context: ./redis
     container_name: simon_redis
-    user: root 
+    user: root
     ports:
       - "6379:6379"
     volumes:
@@ -78,7 +54,7 @@ services:
 
   # phpmyadmin:
   #   image: phpmyadmin/phpmyadmin
-  #   user: root 
+  #   user: root
   #   container_name: simon_phpmyadmin
   #   environment:
   #     PMA_HOST: ${PMA_HOST}
